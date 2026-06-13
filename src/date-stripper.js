@@ -48,13 +48,18 @@
   // A clock time: requires HH:MM (minutes are exactly two digits, so "16:9"
   // aspect ratios and "2:1" scores are left alone). Optional seconds, optional
   // fractional seconds, optional am/pm, optional timezone.
-  var TZ =
-    "(?:" + H + "*(?:Z|GMT|UTC|UT|[ECMP][SD]T|BST|CET|CEST|IST|JST|" +
-    "[+-]\\d{2}:?\\d{2})\\b)?";
+  var TZ_BODY =
+    "(?:Z|GMT|UTC|UT|[ECMP][SD]T|BST|CET|CEST|IST|JST|[+-]\\d{2}:?\\d{2})";
+  var TZ = "(?:" + H + "*" + TZ_BODY + "\\b)?";
   var AMPM = "(?:" + H + "*[AaPp]\\.?[Mm]\\.?)?";
-  var TIME = "\\d{1,2}:\\d{2}(?::\\d{2})?(?:\\.\\d+)?" + AMPM + TZ;
-  // A bare hour with an am/pm marker, e.g. "3pm", "11 a.m." The am/pm marker is
-  // mandatory here, which is what keeps it from eating arbitrary numbers.
+  var CLOCK = "\\d{1,2}:\\d{2}(?::\\d{2})?(?:\\.\\d+)?";
+  // Times are ONLY ever removed as the trailing part of a date match (patterns
+  // 2-3, plus the ISO timestamp in pattern 1) - never on their own. That keeps
+  // bare clock values such as a video player's "0:00 / 1:35:43", schedules and
+  // scores fully intact. `TIME` and `HOUR_AMPM` therefore only ever appear
+  // appended to a date.
+  var TIME = CLOCK + AMPM + TZ;
+  // The time half of e.g. "Jan 1 at 3pm" / "Jan 1 at 11 a.m."
   var HOUR_AMPM = "\\d{1,2}" + H + "*[AaPp]\\.?[Mm]\\.?";
 
   // Number words used by relative-date phrases ("two days ago", "a week ago").
@@ -104,26 +109,20 @@
     // 9. Year range, e.g. "2020-2024", "1999-2001"
     "\\b(?:19|20)\\d{2}" + H + "*[-\\u2013\\u2014]" + H + "*(?:19|20)?\\d{2}\\b",
 
-    // 10. Standalone clock time, e.g. "14:30", "3:45 PM", "09:00:00 UTC"
-    "\\b" + TIME,
-
-    // 11. Bare hour with am/pm, e.g. "3pm", "11 a.m."
-    "\\b" + HOUR_AMPM,
-
-    // 12. Relative: "2 days ago", "a week from now", "ten minutes earlier"
+    // 10. Relative: "2 days ago", "a week from now", "ten minutes earlier"
     "\\b" + COUNT + S + UNIT + "s?" + S +
       "(?:ago|from" + S + "now|later|earlier|ahead|hence|prior)\\b",
 
-    // 13. Relative: "in 3 days", "in a week"
+    // 11. Relative: "in 3 days", "in a week"
     "\\bin" + S + COUNT + S + UNIT + "s?\\b",
 
-    // 14. Relative: "last week", "next Monday", "this month", "coming December"
+    // 12. Relative: "last week", "next Monday", "this month", "coming December"
     "\\b(?:last|next|this|these|past|previous|coming|upcoming)" + S +
       "(?:" + DOW_FULL + "|" + MONTHS + "|weekend|week|fortnight|month|year|" +
       "decade|century|morning|afternoon|evening|night|spring|summer|fall|" +
       "autumn|winter|quarter)\\b",
 
-    // 15. Relative phrases (multi-word first so they win over single words)
+    // 13. Relative phrases (multi-word first so they win over single words)
     "\\bthe" + S + "day" + S + "(?:before" + S + "yesterday|after" + S +
       "tomorrow)\\b",
     "\\ba" + S + "(?:moment|while|bit)" + S + "ago\\b",
@@ -131,7 +130,7 @@
     "\\b(?:just|right)" + S + "now\\b",
     "\\b(?:yesterday|today|tomorrow|tonight)\\b",
 
-    // 16. Standalone full weekday names, e.g. "Monday"
+    // 14. Standalone full weekday names, e.g. "Monday"
     "\\b" + DOW_FULL + "\\b"
   ];
 

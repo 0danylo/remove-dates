@@ -101,15 +101,25 @@ removes("Published on Jan 1, 2024 by staff", "Published on by staff");
 removes("See you Monday!", "See you!");
 
 /* -------------------------------- times ---------------------------------- */
-removes("3:45 PM", "");
-removes("3:45PM", "");
-removes("14:30", "");
-removes("09:00:00", "");
-removes("11:59:59.999", "");
-removes("3pm", "");
-removes("11 a.m.", "");
-removes("09:00 UTC", "");
-removes("Doors open at 7:30 PM sharp", "Doors open at sharp");
+// Standalone times are ALWAYS kept - only a time sitting next to a date goes.
+keeps("3:45 PM");
+keeps("3:45PM");
+keeps("3pm");
+keeps("11 a.m.");
+keeps("14:30");
+keeps("09:00 UTC");
+keeps("09:00:00");
+keeps("11:59:59.999");
+keeps("Doors open at 7:30 PM sharp");
+// Video-player positions / durations - the YouTube case that prompted this.
+keeps("0:00 / 1:35:43");
+keeps("0:00");
+keeps("1:35:43");
+keeps("90:00");
+
+// A time attached to a date is still removed together with the date.
+removes("Meeting January 5, 2024 at 14:30 sharp", "Meeting sharp");
+removes("Doors open Jan 1, 2024 at 7:30 PM sharp", "Doors open sharp");
 
 /* ------------------------------ relative --------------------------------- */
 removes("2 days ago", "");
@@ -176,7 +186,7 @@ keeps("Highway 101 North");
 
 (function () {
   // performance / no catastrophic backtracking on a long string
-  var big = "lorem ipsum 12:34 ".repeat(5000) + "no closing date here";
+  var big = "lorem Jan 1, 2024 12:34 ipsum ".repeat(5000) + "no closing date here";
   var start = Date.now();
   var r = stripDates(big);
   var ms = Date.now() - start;

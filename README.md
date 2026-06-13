@@ -17,7 +17,7 @@ a lonely `3:45 PM` floating where a timestamp used to be.
 | Written | `January 15, 2024`, `Jan 15`, `15th January 2024`, `1st of Jan 2020` |
 | With weekday | `Monday, January 15, 2024`, `Mon, 15 Jan 2024 14:30 GMT` |
 | Month / year | `March 2024`, `December 25` |
-| Clock times | `3:45 PM`, `14:30`, `09:00:00 UTC`, `7pm`, `11 a.m.` |
+| Time next to a date | `January 1, 2024 at 3:45 PM`, `2024-01-15 14:30`, `Mon, 15 Jan 2024 14:30 GMT` |
 | Relative | `2 days ago`, `in three weeks`, `yesterday`, `last Monday`, `just now` |
 | Weekdays | `Monday` … `Sunday` |
 | Semantic | `<time datetime="…">` text **and** the `datetime` attribute |
@@ -37,9 +37,12 @@ on purpose to avoid false positives:
 - **Bare month names** (`May`, `March`, `August`) — also ordinary English words
   ("you *may* go", "*march* forward"). A month is only removed when paired with
   a day or year.
+- **Standalone clock times** (`3:45 PM`, `14:30`, a video player's
+  `0:00 / 1:35:43`, scores, durations) — a time is removed *only* when it sits
+  next to a date, so media players, schedules and scoreboards stay intact.
 - **Two-number ratios / fractions** (`16:9`, `1/2`) and **version strings /
-  IPs** (`1.2.3`). Clock times therefore require two-digit minutes (`16:09`),
-  and numeric dates need all three components.
+  IPs** (`1.2.3`) — numeric dates need all three components with a 2-digit-capped
+  middle field, so these aren't touched.
 - **Code**: `<pre>`, `<code>`, `<kbd>`, `<samp>`, editable fields, and
   `<script>`/`<style>` are skipped.
 
