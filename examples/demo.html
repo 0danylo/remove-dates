@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Remove Dates - demo (updated January 5, 2024)</title>
+    <style>
+      body {
+        font-family: -apple-system, system-ui, Segoe UI, Roboto, sans-serif;
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 16px;
+        line-height: 1.6;
+        color: #1f2933;
+      }
+      h1 { margin-bottom: 4px; }
+      h2 { margin-top: 32px; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; }
+      code { background: #f1f5f9; padding: 1px 4px; border-radius: 4px; }
+      .keep { color: #047857; }
+      footer { margin-top: 40px; color: #7b8794; font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <h1>Remove Dates &mdash; demo page</h1>
+    <p>
+      Load the unpacked extension, then open this file. Every date and time
+      below should disappear. The green &ldquo;should stay&rdquo; list must be
+      left untouched.
+    </p>
+
+    <h2>Should be removed</h2>
+    <div class="grid">
+      <span>ISO: 2024-01-15T14:30:00Z</span>
+      <span>ISO date: 2024-01-15</span>
+      <span>US: 01/15/2024</span>
+      <span>EU: 15/01/2024</span>
+      <span>Dotted: 31.12.2023</span>
+      <span>Long: January 15, 2024</span>
+      <span>Short: Jan 15, 2024</span>
+      <span>Day first: 15th January 2024</span>
+      <span>With weekday: Monday, January 15, 2024</span>
+      <span>RFC: Mon, 15 Jan 2024 14:30:00 GMT</span>
+      <span>Month + year: March 2024</span>
+      <span>Month + day: December 25</span>
+      <span>Time: 3:45 PM</span>
+      <span>24h time: 14:30</span>
+      <span>With seconds: 09:00:00 UTC</span>
+      <span>Bare hour: 7pm</span>
+      <span>Relative: 2 days ago</span>
+      <span>Relative: in three weeks</span>
+      <span>Relative: yesterday</span>
+      <span>Relative: last Monday</span>
+      <span>Weekday: Wednesday</span>
+      <span>Semantic: <time datetime="2024-01-15">Jan 15, 2024</time></span>
+    </div>
+
+    <p>
+      A sentence in the wild: &ldquo;The article was published on
+      January 15, 2024 at 3:45 PM and updated 2 hours ago.&rdquo;
+    </p>
+
+    <p>
+      Hover this <abbr title="Captured on 2023-05-05 at noon">image caption</abbr>
+      &mdash; the <code>title</code> tooltip is cleaned too.
+    </p>
+
+    <h2 class="keep">Should stay (not dates)</h2>
+    <div class="grid keep">
+      <span>Price: $2024.99</span>
+      <span>Version 1.2.3</span>
+      <span>Aspect ratio 16:9</span>
+      <span>Score 2:1</span>
+      <span>Fraction 1/2 cup</span>
+      <span>Phone 555-123-4567</span>
+      <span>Highway 101 North</span>
+      <span>Chapter 12</span>
+      <span>You may go now</span>
+      <span>March forward together</span>
+      <span>The sun is warm</span>
+      <span>30 minutes of running</span>
+    </div>
+
+    <footer>Last reviewed: 2024-06-01 &middot; &copy; 2024 demo</footer>
+  </body>
+</html>

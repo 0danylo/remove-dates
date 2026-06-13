@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>Remove Dates</title>
+  </head>
+  <body>
+    <header>
+      <h1>Remove Dates</h1>
+    </header>
+
+    <p class="count" id="count">&nbsp;</p>
+
+    <label class="row">
+      <span>
+        <strong>Remove dates</strong>
+        <small>Master switch for every site</small>
+      </span>
+      <input type="checkbox" id="enabled" class="switch" />
+    </label>
+
+    <label class="row" id="siteRow">
+      <span>
+        <strong>Disable on this site</strong>
+        <small id="host">&mdash;</small>
+      </span>
+      <input type="checkbox" id="siteDisabled" class="switch" />
+    </label>
+
+    <p class="hint">Changes reload the current tab.</p>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
